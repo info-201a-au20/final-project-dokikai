@@ -39,13 +39,15 @@ Description: Professional players for League of Legends Championship statistics
 
 Download link: [Champ stats](https://www.kaggle.com/xmorra/league-of-legends-world-championship-2019)
 
-How was the data collected:
+How was the data collected: The data was collected by Oracle's Elixir, a blog dedicated to recording stats of League of Legend's esports scene.
 
-How many observations (rows):
+How many observations (rows): There are 1428 observations
 
 How many features (columns):
+There are 98 total features
 
 Which questions from above can be answered using the data in the dataset:
+Which champions are the most popularity and their win rates, as the esports data would contribute heavily in understanding win rates of champions and their popularity.
 
 **Second Dataset:**
 
@@ -54,13 +56,14 @@ Description: Massive EUW Dataset of League information
 
 Download link: [League Data](https://www.kaggle.com/datasnaek/league-of-legends)
 
-How was the data collected:
+How was the data collected: This is a collection of over 50,000 ranked games of League of Legends from their West European servers and takes into affect all parts of a single League of Legends game.
 
-How many observations (rows):
+How many observations (rows): There are 51,490 observations (Games)
 
-How many features (columns):
+How many features (columns): There are 61 features
 
-Which questions from above can be answered using the data in the dataset:
+Which questions from above can be answered using the data in the dataset: This can answer how winning certain objectives in game affect your probability
+to win.
 
 **Third Dataset:**
 
@@ -69,10 +72,10 @@ Description: League of Legends champion data
 
 Download link:[Champ Data](https://www.kaggle.com/uskeche/leauge-of-legends-champions-dataset)
 
-How was the data collected:
+How was the data collected: The data was collected from the public League of Legends API by Riot Games.
 
-How many observations (rows):
+How many observations (rows): There are 145 observations (champions)
 
-How many features (columns):
+How many features (columns): There are 11 features.
 
-Which questions from above can be answered using the data in the dataset:
+Which questions from above can be answered using the data in the dataset: It answers the question on how champion selection affect game duration and win rate, as it  considers every champion's invididual ability.
