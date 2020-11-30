@@ -1,0 +1,17 @@
+---
+title: "Leagues of Legends"
+author: "Kai, Michael, Rajeev, Wenyi"
+date: "11/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("dplyr")
+library("ggplot2")
+source("wpm vs. death.R")
+```
+
+```{r, echo=FALSE}
+chart2
+```
