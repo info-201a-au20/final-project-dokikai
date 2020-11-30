@@ -7,7 +7,8 @@ library("tidyr")
 library("lintr")
 
 # Get pro matches
-promatch_df <- read.csv("./data/2019-summer-match-data-OraclesElixir-2019-11-10.csv", 
+promatch_df <-
+  read.csv("./data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
          stringsAsFactors = FALSE)
 
 # Filter all bans from df
@@ -29,8 +30,9 @@ top_ten_bans <- total_bans_df %>%
 # Place on plotter
 banned_champ_bar <- ggplot(data = top_ten_bans) +
   geom_col(aes(x = reorder(banned_champs, -n), y = n, fill = banned_champs)) +
-  labs(title = "Top Ten Banned Champs During \n2019 League Championship Series") +
-  xlab("Banned Champions") + ylab("Number of Bans by Teams") + 
+  labs(title = "Top Ten Banned Champions During
+       The 2019 League Championship Series") +
+  xlab("Banned Champions") + ylab("Number of Bans by Teams") +
   theme(axis.text.x = element_text(angle = 20, vjust = 1, hjust = 1),
         legend.title = element_blank(), legend.position = "none")
 

@@ -9,7 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library("dplyr")
 library("ggplot2")
+library("tidyr")
+library("lintr")
 source("wpm vs. death.R")
+source("graph_banned_champions.R")
 ```
 
 ```{r, echo=FALSE}
