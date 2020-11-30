@@ -21,4 +21,4 @@ wpm_death <- function(df){
       return(map)    
 }
 
-wpm_death(match_df)
+chart2 <- wpm_death(match_df)
