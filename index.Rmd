@@ -6,20 +6,17 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-<<<<<<< HEAD
+
 source("wpm_vs_death.R")
-=======
 library("dplyr")
 library("ggplot2")
 library("tidyr")
 library("lintr")
-source("wpm vs. death.R")
-source("graph_banned_champions.R")
->>>>>>> efe1d9a6bc61906e71d40ea20d0981cc65d2df3e
+
+
 ```
    In the professional competitions, wards is a very important factor that may determine the winners. It refers to  a deployable unit that removes the fog of war in a certain area of the map. Then, each member of the team can clearly see where their teammates are, and can help them better place battle strategy. Generally, the more words a team have, the more possibility it can win. In the Scatter Plot, we split the win team and fail team and analyze the relationship between the wards that each team place in battleground and the number of deaths. **_(Note: 0 represents fail the game, 1 represents win the game)_**
 ```{r, echo=FALSE}
 chart2
 ```
-    From the right-hand table, it showed that the number of words in most win teams is concentreated on interval [100, 150]. Whereas, on the left-hand table, the number of words in most fail teams is mainly between [0, 150]. **The different intervals showed that the more wards the teams have, the more possibility they will win the game.**
+    From the right-hand table, it showed that the number of words in most win teams is concentrated on interval [100, 150]. Whereas, on the left-hand table, the number of words in most fail teams is mainly between [0, 150]. **The different intervals showed that the more wards the teams have, the more possibility they will win the game.**
