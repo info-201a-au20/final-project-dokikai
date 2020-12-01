@@ -11,11 +11,13 @@ library("dplyr")
 library("ggplot2")
 library("tidyr")
 library("lintr")
+source("pie_visualization.R")
 source("wpm_vs_death.R")
 source("graph_banned_champions.R")
 source("analysis_summary_info.R")
 source("analysis_summary_table.R")
 ```
+
 ## Summary 
     The domain of our team is League of Legends,a iconic moba game that has 115 millions players all around the world. The fun and excitement of this game allows 
 players never fell tired of it. In recent year, with the development and popularity of sports, the official Leagues of Legends competition has become one of the most famous events. Thus, in this team project, with our team's passion and interests, we focus on analyzing the data set of official League of Legends competitions and determine the difference of different classes of characters in the game and some critical factors that contributed to the winner.
@@ -27,6 +29,26 @@ champ_table
 has one of the highest average difficulty number. In fact, in the competition, it's important for players to figure out the pros and cons of each characters, and more importantly, they need to know how to group different characters as a team and build strategy.
      
 ## Chart 2:  Scatter Plot in Terms of Wards Versus Death
+  During the start of each match, if a player is the first in the entire match to
+do certain things to the enemy team, it is usually referred as a first *thing*. 
+An example of this is getting the first kill of the match, 
+known as **first blood**, or getting the first inhibitor or tower, which means 
+to be the first to destroy a team's line of defense. Another is getting the
+first dragon, which means the first to kill the dragon that is hidden in the 
+jungles of the map. These are important factors to consider into the game as 
+obtaining things first means the team has an advantage against the enemy team. 
+
+```{r, echo=FALSE}
+multiplot(first_blood_pie, first_tower_pie,
+          first_inhib_pie, first_drag_pie, cols = 2)
+```
+
+As seen by the four pie charts, it clearly shows that teams that got first
+blood, inhibitor, tower or dragon have an advantage, which makes sense as these 
+are things that give advantage to the team that gets them first as it affects
+the defense of the opposing team or gives
+
+
    In professional matches, wards are a very important factor that may determine the winners and losers. It refers to a deployable unit that removes the fog of war in a certain area of the map. Then, each member of the team can clearly see where their teammates are, and can help them better place battle strategy. Generally, the more wards a team has, the higher probability of them winning. In the scatter plot, we split the winning and losing teams and analyzed their relationship between the wards that each team place in battleground and their number of deaths. 
    
 **_(Note: 0 represents losing the game, 1 represents winning the game)_**

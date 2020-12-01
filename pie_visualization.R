@@ -72,7 +72,7 @@ first_blood_pie <- games_stats_pie %>%
 
 # Generates the pie chart for the aggregated first blood data and proportions
 first_tower_pie <- games_stats_pie %>%
-  ggplot(aes(x = "", y = won_fb, fill = c("Won", "Lost"))) +
+  ggplot(aes(x = "", y = won_ft, fill = c("Won", "Lost"))) +
   ggtitle("Got First Tower") +
   geom_bar(width = 1, stat = "identity") +
   guides(fill = guide_legend(reverse = TRUE)) +
@@ -84,7 +84,7 @@ first_tower_pie <- games_stats_pie %>%
 
 # Generates the pie chart for the aggregated first blood data and proportions
 first_inhib_pie <- games_stats_pie %>%
-  ggplot(aes(x = "", y = won_fb, fill = c("Won", "Lost"))) +
+  ggplot(aes(x = "", y = won_fi, fill = c("Won", "Lost"))) +
   ggtitle("Got First Inhibitor") +
   geom_bar(width = 1, stat = "identity") +
   guides(fill = guide_legend(reverse = TRUE)) +
@@ -96,7 +96,7 @@ first_inhib_pie <- games_stats_pie %>%
 
 # Generates the pie chart for the aggregated first blood data and proportions
 first_drag_pie <- games_stats_pie %>%
-  ggplot(aes(x = "", y = won_fb, fill = c("Won", "Lost"))) +
+  ggplot(aes(x = "", y = won_fd, fill = c("Won", "Lost"))) +
   ggtitle("Got First Dragon") +
   geom_bar(width = 1, stat = "identity") +
   guides(fill = guide_legend(reverse = TRUE)) +
@@ -155,8 +155,3 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
     }
   }
 }
-
-# Generates the multi plot pie chart that displays disaggregated categories of
-# information
-final_pie_plot <- multiplot(first_blood_pie, first_tower_pie,
-          first_inhib_pie, first_drag_pie, cols = 2)
