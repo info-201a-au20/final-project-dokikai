@@ -14,7 +14,7 @@ library("lintr")
 source("wpm_vs_death.R")
 source("graph_banned_champions.R")
 ```
-   In professional matches, wards are a very important factor that may determine the winners and losers. It refers to a deploy-able unit that removes the fog of war in a certain area of the map. Then, each member of the team can clearly see where their teammates are, and can help them better place battle strategy. Generally, the more wards a team has, the higher probability of them winning. In the scatter plot, we split the winning and losing teams and analyzed their relationship between the wards that each team place in battleground and their number of deaths. 
+   In professional matches, wards are a very important factor that may determine the winners and losers. It refers to a deployable unit that removes the fog of war in a certain area of the map. Then, each member of the team can clearly see where their teammates are, and can help them better place battle strategy. Generally, the more wards a team has, the higher probability of them winning. In the scatter plot, we split the winning and losing teams and analyzed their relationship between the wards that each team place in battleground and their number of deaths. 
    
 **_(Note: 0 represents losing the game, 1 represents winning the game)_**
    
