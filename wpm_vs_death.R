@@ -9,7 +9,7 @@ library("lintr")
 library("knitr")
 # import the dataset
 match_df <- read.csv("data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
-  stringsAsFactors = FALSE
+  stringsAsFactors = FALSE, fileEncoding = 'UTF-8-BOM'
 )
 # write the function:
 wpm_death <- function(df) {
