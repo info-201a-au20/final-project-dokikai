@@ -1,5 +1,5 @@
 ---
-title: "Leagues of Legends"
+title: "Leagues of Legends Statistics Report"
 author: "Kai, Michael, Rajeev, Wenyi"
 date: "11/29/2020"
 output: html_document
@@ -7,19 +7,41 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-<<<<<<< HEAD
-source("wpm_vs_death.R")
-=======
 library("dplyr")
 library("ggplot2")
 library("tidyr")
 library("lintr")
-source("wpm vs. death.R")
+source("wpm_vs_death.R")
 source("graph_banned_champions.R")
->>>>>>> efe1d9a6bc61906e71d40ea20d0981cc65d2df3e
 ```
-   In the professional competitions, wards is a very important factor that may determine the winners. It refers to  a deployable unit that removes the fog of war in a certain area of the map. Then, each member of the team can clearly see where their teammates are, and can help them better place battle strategy. Generally, the more words a team have, the more possibility it can win. In the Scatter Plot, we split the win team and fail team and analyze the relationship between the wards that each team place in battleground and the number of deaths. **_(Note: 0 represents fail the game, 1 represents win the game)_**
+   In professional matches, wards are a very important factor that may determine the winners and losers. It refers to a deploy-able unit that removes the fog of war in a certain area of the map. Then, each member of the team can clearly see where their teammates are, and can help them better place battle strategy. Generally, the more wards a team has, the higher probability of them winning. In the scatter plot, we split the winning and losing teams and analyzed their relationship between the wards that each team place in battleground and their number of deaths. 
+   
+**_(Note: 0 represents losing the game, 1 represents winning the game)_**
+   
 ```{r, echo=FALSE}
 chart2
 ```
-    From the right-hand table, it showed that the number of words in most win teams is concentreated on interval [100, 150]. Whereas, on the left-hand table, the number of words in most fail teams is mainly between [0, 150]. **The different intervals showed that the more wards the teams have, the more possibility they will win the game.**
+    From the right-hand table, it shows that the number of wards in most win teams is concentrated on interval [100, 150]. Whereas, on the left-hand table, the number of wards in most losing teams is mainly between [0, 150]. **The different intervals showed that the more wards the teams have, the more possibility they will win the game.**
+    
+  In each match, players from both teams vote to ban a certain champion from 
+being played in the match. Voting for each ban is done 5 times for both teams 
+but teams can also choose to not ban a champion during one of these phases. 
+Then, players choose what champions to play. These votes exist because League of Legends 
+has over **150 different champions** to play from and each have their respective 
+abilities that make them unique. By providing bans, teams can ensure they won't 
+have to play against against *certain champions* that are strong with the enemy's 
+team compositions or champions that *counter* their own champions. In the graph, 
+we were able to obtain the top ten banned champions during the 
+**LCS 2019 Summer Season** by counting each banned champions selected for
+each team ban and ranking the top ten.
+
+```{r, echo=FALSE}
+chart3
+```
+
+  As seen in the graph, **Pantheon** seems to be the most banned champion from
+all teams that participated during the LCS 2019 Summer Series, with **Qiyana**
+coming in second. The reason for Pantheon being the most banned champion during 
+the series was because players knew how overpowered Pantheon was in matches in 
+2019. Because of his versatility as a champion, teams were better off banning 
+him instead of going against him. To read more about why he was banned, [click here.](https://www.invenglobal.com/articles/9417/worlds-2019-why-pantheon-was-banned-for-100-of-group-stage)
