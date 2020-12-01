@@ -7,49 +7,51 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
 library("dplyr")
 library("ggplot2")
 library("tidyr")
 library("lintr")
+source("analysis_summary_info.R")
+source("analysis_summary_table.R")
 source("pie_visualization.R")
 source("wpm_vs_death.R")
 source("graph_banned_champions.R")
-source("analysis_summary_info.R")
-source("analysis_summary_table.R")
 ```
 
 ## Summary 
-    The domain of our team is League of Legends,a iconic moba game that has 115 millions players all around the world. The fun and excitement of this game allows 
-players never fell tired of it. In recent year, with the development and popularity of sports, the official Leagues of Legends competition has become one of the most famous events. Thus, in this team project, with our team's passion and interests, we focus on analyzing the data set of official League of Legends competitions and determine the difference of different classes of characters in the game and some critical factors that contributed to the winner.
-    In League of legends, there are mainly five classes which are Tanks, Fighters, Mages, Slayers, Controllers, and Marksmen. In the competitions, each of the classes can bring benefits to players by their different characteristics. Here, we summarized some main characters. Class `r highest_damage` can cause the highest damage. `r highest_tankiness` has the Strongest defensive capabilities.`r highest_mobility` has the most flexibility among all of the classes. Class `r highest_difficulty` is the most difficult class to control, and `r lowest_difficulty` is the easiest class to play.We also provide the summary data about each classes with their characteristics. 
+
+  The domain of our team is League of Legends, an iconic MOBA game that has over 115 millions players from all around the world. The fun and excitement of this game allows players to never get tired of it as it continues to evolve every season. In recent years, with the development and popularity of e-sports, the official Leagues of Legends "Worlds" competition has become one of the most viewed online gaming events in history. Thus, in this team project, with our team's passion and interests, we focus on analyzing the data set of official League of Legends competitions, day-to-day games, and character information to determine the various insights about the game itself. While initially we wanted to answer a different variety of questions, we found that the data available to us led us to make slight modifications to our initial questions. The three datasets that we end up utilizing for our analysis are:
+  
+  > Professional League of Legends match statistics [found here](https://www.kaggle.com/xmorra/league-of-legends-world-championship-2019)
+  
+  > Massive EUW Data Set of League information for Average Player Statistics [found here](https://www.kaggle.com/datasnaek/league-of-legends)
+  
+  > League of Legends Champion Data from Riot's API [found here](https://www.kaggle.com/uskeche/leauge-of-legends-champions-dataset)
+  
+## Summary Table: Class Information
+  In League of legends, there are many different roles a player can choose from when picking their champion. In the competitions, each of the classes bring unique benefits to players based their different characteristics. Here, we summarized some main information regarding character classes. For example, class `r highest_damage` can cause the highest damage where a class like a`r highest_tankiness` has the Strongest defensive capabilities. As for mobility, the `r highest_mobility` class has the most flexibility and the highest ability to maneuver the map. With that, the `r highest_difficulty` class is the most difficult class to master, while the `r lowest_difficulty` class is generally the easiest class to play. We also provide the summary data about each classes with their characteristics.
+    
 ```{r, echo=FALSE}
-champ_table
+kable(champ_table)
 ```
-     In the data set, one of the characters that has the most average damage is **Mage-Marksman**, which is a subclass of Mage, but is has the lowest average tackiness. It means that even though **Mage-Marksman** can cause the great damage in the competition, it also easily die. The characters that has the greatest average tackiness is **Tank** but it has the lowest average damage, which shows that, in the competition, the character are mainly play the role of defense and support. The champion has the most average mobility is **Mage-Assasin**, which means that the champion is very flexible in the game and not easily be killed by opponents. However, it also required the players to have excellent control skills because **Mage-Assasin**
-has one of the highest average difficulty number. In fact, in the competition, it's important for players to figure out the pros and cons of each characters, and more importantly, they need to know how to group different characters as a team and build strategy.
-     
-## Chart 2:  Scatter Plot in Terms of Wards Versus Death
-  During the start of each match, if a player is the first in the entire match to
-do certain things to the enemy team, it is usually referred as a first *thing*. 
-An example of this is getting the first kill of the match, 
-known as **first blood**, or getting the first inhibitor or tower, which means 
-to be the first to destroy a team's line of defense. Another is getting the
-first dragon, which means the first to kill the dragon that is hidden in the 
-jungles of the map. These are important factors to consider into the game as 
-obtaining things first means the team has an advantage against the enemy team. 
+  In the data set, we decided to group by class as that's an overarching trait that all champions has and gives us insights based on the average numbers of those class (on a scale of 1 to 3). One of the class that has the most average damage is **Mage-Marksman**, which is a subclass of Mage, but is has the lowest average tankiness. It means that even though **Mage-Marksman** can cause the great damage in the competition, it can also easily die. The characters that has the greatest average tankiness are generally the **Tank** class but it has the lowest average damage, which shows that, in the competition, the character are mainly play the role of defense and support. The champion has the most average mobility is **Mage-Assasin**, which means that the champion is very flexible in the game and not easily be killed by opponents. However, it also required the players to have excellent control skills because **Mage-Assasin**
+has one of the highest average difficulty number. In fact, in the competition, it's important for players to figure out the pros and cons of each characters, and more importantly, they need to know how to group different characters as a team and build strategy. This not only keeps the game interesting, but ensures that each role has enough versatility to ensure that the game remains balanced.
+
+## Chart 1:  Objective Control and Win Percentages
+  Throughout each match, there are things called "objectives" that players attempt to control and obtain which (usually) bring benefits for their entire time. An example of this would be getting the **First Blood**, which gives bonus gold to the first team that obtains it. This is, of course, one of many different "first" objectives a team can obtain in the game, where some others include - first inhibitor, first tower, first Baron, first Dragon, first scuttle, etc. These are all important factors to consider into the game as objective control helps propogate larger leads against the enemy team. Visualized below are a few of the more relevant "first" objectives and how they impact a team's probability of winning. 
 
 ```{r, echo=FALSE}
 multiplot(first_blood_pie, first_tower_pie,
           first_inhib_pie, first_drag_pie, cols = 2)
 ```
 
-As seen by the four pie charts, it clearly shows that teams that got first
-blood, inhibitor, tower or dragon have an advantage, which makes sense as these 
-are things that give advantage to the team that gets them first as it affects
-the defense of the opposing team or gives
+As the pie charts indicate above, _all_ of these objectives positively impact a team's probability of winning the game. Of these, the least impactful appears to be getting First Blood - which makes sense given the fact that the bonuses of getting First Blood have minimal impact on other team other than a minor gold advantage. That being said, however, getting First Blood can be an indicator of a skill gap between teams, which could be a factor as to why it has a positive correlation. The most impactful of the objectives, as indicated above, is obtaining first Inhibitor. In fact, the visualization shows that 80% of the games in our data set were won by the team that obtained the first Inhibitor. As for the rest, both objectives of obtaining first Tower and obtaining first Dragon appear to have a positive correlation with winning the game, having 69% and 65% win rates respectively. Furthermore, we included this visualization in order to represent the ultimate objective of the game: to secure large territorial victories and gold leads. We decided to break this up into four charts representing various objectives because it can provide a lot of insight as to where players should focus their attention, especially in a game with so many things to keep track of. As a result, one take-away that you could get from this chart is that, regardless of how many kills or CS the other team has, if you are able to secure things like towers or inhibitors you are statistically giving yourself a better chance of winning. We felt that faceted pie charts could communicate this the best as they are easily interpretable and are color coded to represent various important objectives.
 
-
-   In professional matches, wards are a very important factor that may determine the winners and losers. It refers to a deployable unit that removes the fog of war in a certain area of the map. Then, each member of the team can clearly see where their teammates are, and can help them better place battle strategy. Generally, the more wards a team has, the higher probability of them winning. In the scatter plot, we split the winning and losing teams and analyzed their relationship between the wards that each team place in battleground and their number of deaths. 
+## Chart 2:  Scatter Plots regarding Wards and Vision Score
+   With that, in professional matches, wards are a very important factor that may determine the winners and losers. It refers to a deployable unit that removes the fog of war in a certain area of the map. Then, each member of the team can clearly see where their teammates are, and can help them better place battle strategy. Generally, the more wards a team has, the higher probability of them winning. In the scatter plot, we split the winning and losing teams in professional League of Legends play and analyzed their relationship between the wards that each team place in battleground and their number of deaths. 
    
 **_(Note: 0 represents losing the game, 1 represents winning the game)_**
    
@@ -58,8 +60,12 @@ chart2
 ```
 
 
-    From the right-hand table, it shows that the number of wards in most win teams is concentrated on interval [100, 150]. Whereas, on the left-hand table, the number of wards in most losing teams is mainly between [0, 150]. **The different intervals showed that the more wards the teams have, the more possibility they will win the game.**
+  From the right-hand table, it shows that the number of wards in most win teams is concentrated on interval [100, 150]. Whereas, on the left-hand table, the number of wards in most losing teams is mainly between [0, 150]. **The different intervals showed that the more wards the teams have, the more possibility they will win the game.**
     
+  We decided to visualize ward placements because, within the game and espescially within lower ELOs of League of Legends, vision score and warding is often looked over as irrelevant. However, as you get into higher levels of play, wards and vision control become _significantly_ more important. We felt that a scatterplot would be the best representation of this data as, in professional matches, each individual game matters and this allows us to see if there was any positive or negative correlation between the number of wards placed, the number of deaths that occurred, and if that was part of the winning or losing team. It's important to note, however, that we can't draw direct insights based off of warding tendencies as, with the highest levels of play, it's unlikely that a single factor would have a huge sway on the games.
+  
+## Chart 3:  Professional Ban Rates
+
   In each match, players from both teams vote to ban a certain champion from 
 being played in the match. Voting for each ban is done 5 times for both teams 
 but teams can also choose to not ban a champion during one of these phases. 
@@ -82,4 +88,8 @@ coming in second. The reason for Pantheon being the most banned champion during
 the series was because players knew how overpowered Pantheon was in matches in 
 2019. Because of his versatility as a champion, teams were better off banning 
 him instead of going against him. To read more about why he was banned, [click here.](https://www.invenglobal.com/articles/9417/worlds-2019-why-pantheon-was-banned-for-100-of-group-stage)
+We chose to use bar graphs to represent the most banned champions because
+it was an easy way to visualize which champions were the most banned by looking
+at the bar that was the highest as it gradually goes down the rest of the ranks 
+of the top ten banned champions.
 
