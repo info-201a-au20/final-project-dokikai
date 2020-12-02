@@ -8,7 +8,7 @@ library("styler")
 library("lintr")
 library("knitr")
 # import the dataset
-match_df <- read.csv("data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
+match_df <- read.csv("../data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
   stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM"
 )
 # write the function:

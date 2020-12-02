@@ -3,7 +3,7 @@ library("dplyr")
 library("styler")
 library("lintr")
 # Reads CSV file of League champions into a Dataframe
-champions_df <- read.csv("data/LoL-Champions.csv", stringsAsFactors = FALSE)
+champions_df <- read.csv("../data/LoL-Champions.csv", stringsAsFactors = FALSE)
 
 # Groups by champion class and then finds the average damage, tankiness,
 # mobility, and difficulty of the corresponding classes

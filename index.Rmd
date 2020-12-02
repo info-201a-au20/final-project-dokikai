@@ -14,11 +14,12 @@ library("dplyr")
 library("ggplot2")
 library("tidyr")
 library("lintr")
-source("analysis_summary_info.R")
-source("analysis_summary_table.R")
-source("pie_visualization.R")
-source("wpm_vs_death.R")
-source("graph_banned_champions.R")
+setwd("~/Info201/final-project-dokikai/scripts/")
+source('../scripts/analysis_summary_info.R')
+source('../scripts/analysis_summary_table.R')
+source('../scripts/pie_visualization.R')
+source('../scripts/wpm_vs_death.R')
+source('../scripts/graph_banned_champions.R')
 ```
 
 ## Summary 

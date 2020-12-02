@@ -4,7 +4,7 @@ library("ggplot2")
 library("scales")
 
 # Filter down rows only to be games won (using won category)
-games_df <- read.csv("data/games.csv", stringsAsFactors = FALSE)
+games_df <- read.csv("../data/games.csv", stringsAsFactors = FALSE)
 
 # This variable stores the number of games played
 num_of_games <- nrow(games_df)
