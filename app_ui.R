@@ -6,7 +6,7 @@ wpm_sidebar_content <- sidebarPanel(
   selectInput(
     inputId = "var_team",
     label = "Select Teams",
-    choices = list("Win Teams" = "1", "Lose Teams" = "0", "Both" = "2"),
+    choices = list("Both" = "2", "Win Teams" = "1", "Lose Teams" = "0"),
     selected = "Both"
   ),
   sliderInput(
@@ -14,14 +14,14 @@ wpm_sidebar_content <- sidebarPanel(
     label = "Choose a interval for the number of wards",
     max = `max_ward`,
     min = 0,
-    value = 0
+    value = `max_ward`
   ),
   sliderInput(
     inputId = "num_death",
     label = "Choose a interval for the number of death",
     max = `max_death`,
     min = 0,
-    value = 0,
+    value = `max_death`,
     round = FALSE
   )
 )
