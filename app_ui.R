@@ -216,12 +216,61 @@ page_one <- tabPanel(
 )
 
 page_five <- tabPanel(
-  "Page Title (Summary Takeaway)",
-  h2("Put a caption here"),
-  sidebarLayout(
-    sidebarPanel(),
-    mainPanel()
-  )
+  "Summary Takeaway",
+  h2("Champion Statistics"),
+  p("Notable data insight or pattern – One notable data insight that we noticed
+    in the visualization is that different classes of champions have different
+    distributions of statistics like Style, Difficulty, Tankiness, Damage, etc.
+    This is shown specifically from the box plot visualization in the “Champion
+    Class, Skills, and Objectives” tab of the interface which has been
+    consolidated into the figure below."),
+  p("[Insert Figure]"),
+  p("From this table, some general observations we can make are that, on
+    average, the Tank class is the easiest to play while Mage-Assasins, on
+    average, are the most difficult. Furthermore, certain classes in general
+    have higher damage outputs – Assasins, Mage-Marksmans, and Marksman to name
+    a few."),
+  p("These insights, furthermore, have broader implications for the game as a
+    whole and contain valuable information for players across a broad spectrum
+    of experience. For the newer player base, knowing which champion class is
+    relatively less difficult or which class does damage the easiest can be
+    extremely helpful in navigating such a complex game. On the other hand, for
+    higher levels of play, being able to consider general stats like tankiness,
+    mobility or crowd control can be extremely helpful in making advanced team
+    compositions and forming the meta-game. In all, it appears that getting a
+    broader level overview about Champion Class information can provide helpful
+    direction to all League of Legends players."),
+  h2("Objectives & Vision Control"),
+  p("With that, in professional matches, wards are often discussed as a very
+    important factor that may determine the winners and losers. It refers to a
+    deployable unit that removes the fog of war in a certain area of the map.
+    With wards, each member of the team can clearly see where their enemies are
+    and can help them better place battle strategy. A takeaway we have from our
+    visualization is that there appeared to be a higher concentration of wards,
+    on average, for the winning teams with generally less deaths on their parts
+    – so we can assess that there is at least some degree of positive
+    correlation between warding and winning in professional play. "),
+  p("This is, of course, specific to professional play but can provide insights
+    into the game for players of all levels. And oftentimes, because warding is
+    not prioritized as heavily in lower ELOs of play, newer or less experienced
+    players may want to mimic some of the behaviors that winning professional
+    teams have with regards to warding. This also leads into a broader
+    discussion of map and objective control, which has historically been a
+    problem that newer players face with playing League. Oftentimes, people
+    focus too much on getting gold (the currency in League) and kills but not
+    enough on obtaining objectives like Dragon, Towers, or Inhibitors which
+    results in games that drag out and winning teams “throwing” their lead. In
+    fact, this emphasis on objective control is highlighted well in the Pie
+    Chart visualizations from the “Champion Class, Skills, and Objectives”
+    panel that show a very strong correlation between obtaining the first
+    objectives and winning the game. This is most notably shown with the First
+    Inhibitor visualization where 80% of teams that won the League match got the
+    first inhibitor – making a strong argument that good objective control and
+    map control tends to align with the winning team. In all, both in terms of
+    warding and objective control, managing map presence appears the be a
+    fundamental key to winning in League of Legends."),
+  h2("Champion Banning"),
+  p("heyyyyy")
 )
 
 ui <- navbarPage(
