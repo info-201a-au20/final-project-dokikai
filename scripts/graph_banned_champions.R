@@ -10,7 +10,7 @@ library("lintr")
 
 # Obtain matches
 promatch_df <-
-  read.csv("./data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
+  read.csv("../data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
          stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
 
 # Filter all bans from promatch_df and obtain top ten

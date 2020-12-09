@@ -143,16 +143,19 @@ server <- function(input, output, session) {
         gather(ban_phase, banned_champs, ban1, ban2, ban3, ban4, ban5) %>%
         count(banned_champs) %>%
         arrange(-n) %>%
-        slice(1:10)
+        slice(1:10) %>%
+        rename("Number_of_Bans" = n) %>%
+        rename("Champion" = banned_champs)
       banned_champ_bar <- ggplot(data = bans_df) +
-        geom_col(aes(x = reorder(banned_champs, -n), y = n,
-                     fill = banned_champs)) +
+        geom_col(aes(x = reorder(Champion, -Number_of_Bans), y = Number_of_Bans,
+                     fill = Champion)) +
         labs(title = "Top Ten Banned Champions During
              The LCS 2019 Summer Season") +
         xlab("Banned Champions") + ylab("Number of Bans By Team") +
         theme(axis.text.x = element_text(angle = 20, vjust = 1, hjust = 1),
               legend.title = element_blank(), legend.position = "none")
-      result <- ggplotly(banned_champ_bar)
+      result <- ggplotly(banned_champ_bar, tooltip = c("Number_of_Bans",
+                                                       "Champion"))
       return(result)
     })
 
