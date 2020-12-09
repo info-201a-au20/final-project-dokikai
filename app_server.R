@@ -5,8 +5,9 @@ library("plotly")
 library("scales")
 
 # Import  wenyi's data
-df_wards <- read.csv("./data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
-                     stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
+df_wards <- read.csv(
+  "./data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
+  stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
 # Wenyi: Define variable that wll be used in ui file
 max_death <- max(df_wards$teamdeaths)
 max_ward <- max(df_wards$wards)
@@ -68,51 +69,52 @@ blank_theme <- theme_minimal() +
 
 
 server <- function(input, output, session) {
-  
+
     output$message <- renderText({
-      if(input$var_team == 1){
-        msg <- paste0("You've chosen Win Team with wards interval [0,", 
-                      input$num_ward,"], and death inteval [0,", input$num_death,"]")
-      }
-      if(input$var_team== 0){
-        msg <- paste0("You've chosen Lose Team with wards interval [0,", 
-                      input$num_ward," ], and death inteval [0,", input$num_death,"]")
-      }
-      if(input$var_team== 2){
-        msg <- paste0("You've chosen Both Teams with wards interval [0,", 
-                      input$num_ward,"], and death inteval [0,", input$num_death,"]")
+      if (input$var_team == 1) {
+        msg <- paste0("You've chosen Win Team with wards interval [0,",
+                      input$num_ward, "], and death inteval [0,",
+                      input$num_death, "]")
+      } else if (input$var_team == 0) {
+        msg <- paste0("You've chosen Lose Team with wards interval [0,",
+                      input$num_ward, " ], and death inteval [0,",
+                      input$num_death, "]")
+      } else if (input$var_team == 2) {
+        msg <- paste0("You've chosen Both Teams with wards interval [0,",
+                      input$num_ward, "], and death inteval [0,",
+                      input$num_death, "]")
       }
       return(msg)
     })
-    
+
     output$wpm_death_plot <- renderPlotly({
       data <- df_wards %>%
         group_by(gameid) %>%
         filter(position == "Team") # select data that is useful to our analyze
-      # put the wards as x-axis, and number of death as y-axis, them put team name
+      # put the wards as x-axis, and number of death as y-axis, put team name
       # on the chats. Finally, we separate the win teams and fail team to make a
       # clear comparison
-      
-      if(input$var_team == 1){
+
+      if (input$var_team == 1) {
         data <- filter(data, result == 0)
       }
-      if(input$var_team== 0){
+      if (input$var_team == 0) {
         data <- filter(data, result == 1)
       }
-      useful_data <-data%>%
-        ungroup()%>%
-        filter(wards <= input$num_ward, teamdeaths <= input$num_death)%>%
+      useful_data <- data %>%
+        ungroup() %>%
+        filter(wards <= input$num_ward, teamdeaths <= input$num_death) %>%
         select(team, wards, teamdeaths)
-      
+
       map <- ggplot(useful_data, mapping = aes(
         x = wards, y = teamdeaths, color = team,
       )) +
-        geom_point(stat = "identity") 
-      
+        geom_point(stat = "identity")
+
       map <- ggplotly(map)
       return(map)
     })
-    
+
     output$first_pie <- renderPlot({
       curr_df <- select(games_stats_pie, input$objectiveType)
       cur_col <- curr_df[[input$objectiveType]]
@@ -128,12 +130,12 @@ server <- function(input, output, session) {
                     label = percent(cur_col / 100)), size = 5)
       return(pie_plot)
     })
-    
+
     output$bar_graph_banned <- renderPlotly({
       banned_df <- df_wards
-      if(input$team_name != "All Teams") {
+      if (input$team_name != "All Teams") {
         banned_df <- filter(banned_df, team == input$team_name)
-      } 
+      }
       bans_df <- banned_df %>%
         select(position, player, team, champion, contains("ban")) %>%
         filter(position == "Team") %>%
@@ -143,16 +145,28 @@ server <- function(input, output, session) {
         arrange(-n) %>%
         slice(1:10)
       banned_champ_bar <- ggplot(data = bans_df) +
-        geom_col(aes(x = reorder(banned_champs, -n), y = n, 
+        geom_col(aes(x = reorder(banned_champs, -n), y = n,
                      fill = banned_champs)) +
         labs(title = "Top Ten Banned Champions During
-       The LCS 2019 Summer Season") +
+             The LCS 2019 Summer Season") +
         xlab("Banned Champions") + ylab("Number of Bans By Team") +
         theme(axis.text.x = element_text(angle = 20, vjust = 1, hjust = 1),
               legend.title = element_blank(), legend.position = "none")
-      plotly <- ggplotly(banned_champ_bar)
-      return(plotly)
+      result <- ggplotly(banned_champ_bar)
+      return(result)
+    })
+
+    output$class <- renderPlotly({
+      champions_df <- read.csv("./data/LoL-Champions.csv",
+                               stringsAsFactors = FALSE)
+      box_plot <- champions_df %>%
+        filter(Class %in% input$checkbox) %>%
+        group_by(Class) %>%
+        ggplot(aes(x = Class, y = !!as.name(input$stats))) +
+        ggtitle(paste("Champion Class", input$stats,
+                      "Distribution")) +
+        geom_boxplot(color = "black", fill = "blue", alpha = 0.2) +
+        guides(fill = FALSE) + coord_flip()
+      return(ggplotly(box_plot))
     })
   }
-  
-  
