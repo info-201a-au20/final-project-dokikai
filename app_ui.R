@@ -13,15 +13,15 @@ wpm_sidebar_content <- sidebarPanel(
     inputId = "num_ward",
     label = "Choose a interval for the number of wards",
     max = `max_ward`,
-    min = 0,
-    value = 0
+    min = `min_ward`,
+    value = `min_ward`
   ),
   sliderInput(
     inputId = "num_death",
     label = "Choose a interval for the number of death",
     max = `max_death`,
-    min = 0,
-    value = 0,
+    min = `min_death`,
+    value = `min_death`,
     round = FALSE
   )
 )
