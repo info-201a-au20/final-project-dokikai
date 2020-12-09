@@ -68,9 +68,21 @@ pie_main_content <- mainPanel(
   plotOutput(outputId = "first_pie")
 )
 
+pie_main_content <- mainPanel(
+  plotOutput(outputId = "first_pie")
+)
+
 page_two <- tabPanel(
   "Winning First Objective and Winrate",
   h2("How First Objectives Affect Winrate"),
+  p("When approaching this dataset, one question that was pertinent to League
+    of Legends is how much of an impact game objective control had in your win
+    percentages. In particular, getting early objectives relative to the other
+    team can get you a lead in the game, but quantifying that lead is something
+    we set out to do! As a result, these charts show the correlative win
+    percentages based on if the winning team won the given objective. We also
+    choice a Pie Chart to represent this data because of how it intuitively
+    shows the visual demarkers spatially with area."),
   sidebarLayout(
     pie_sidebar_content,
     pie_main_content
