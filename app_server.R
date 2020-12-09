@@ -5,7 +5,7 @@ library("plotly")
 library("scales")
 
 # Import  wenyi's data
-df_wards <- read.csv("data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
+df_wards <- read.csv("./data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
                      stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
 # Wenyi: Define variable that wll be used in ui file
 max_death <- max(df_wards$teamdeaths)
@@ -127,6 +127,31 @@ server <- function(input, output, session) {
       geom_text(aes(y = cur_col / 2 + c(0, cumsum(cur_col)[-length(cur_col)]),
                     label = percent(cur_col / 100)), size = 5)
       return(pie_plot)
+    })
+    
+    output$bar_graph_banned <- renderPlotly({
+      banned_df <- df_wards
+      if(input$team_name != "All Teams") {
+        banned_df <- filter(banned_df, team == input$team_name)
+      } 
+      bans_df <- banned_df %>%
+        select(position, player, team, champion, contains("ban")) %>%
+        filter(position == "Team") %>%
+        select(ban1:ban5) %>%
+        gather(ban_phase, banned_champs, ban1, ban2, ban3, ban4, ban5) %>%
+        count(banned_champs) %>%
+        arrange(-n) %>%
+        slice(1:10)
+      banned_champ_bar <- ggplot(data = bans_df) +
+        geom_col(aes(x = reorder(banned_champs, -n), y = n, 
+                     fill = banned_champs)) +
+        labs(title = "Top Ten Banned Champions During
+       The LCS 2019 Summer Season") +
+        xlab("Banned Champions") + ylab("Number of Bans By Team") +
+        theme(axis.text.x = element_text(angle = 20, vjust = 1, hjust = 1),
+              legend.title = element_blank(), legend.position = "none")
+      plotly <- ggplotly(banned_champ_bar)
+      return(plotly)
     })
   }
   

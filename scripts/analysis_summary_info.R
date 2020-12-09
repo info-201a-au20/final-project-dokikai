@@ -1,8 +1,5 @@
 # INFO201 AE
-# Rajeev Krishna Vijayaraghavan
-
-#clear old variables
-rm(list = ls())
+# Rajeev Krishna Vijayaraghavanmaybe
 
 # Load in libraries
 library("dplyr")

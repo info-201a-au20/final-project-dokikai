@@ -78,18 +78,65 @@ page_two <- tabPanel(
 )
 # Kai's end
 
+# Start of Michael's part
 
-page_one <- tabPanel(
-  "Page One (Overview)",
-  h2("Put a caption here"),
-  sidebarLayout(
-    sidebarPanel(),
-    mainPanel()
+# Calls plotly for main panel
+bar_graph_bans <- mainPanel(
+  h3("Banned Champions During LCS 2019 Summer Season"),
+  plotlyOutput(
+    "bar_graph_banned"
   )
 )
 
+# Creates list for inputs of teams
+select_team <- sidebarPanel(
+  selectInput(
+    inputId = "team_name",
+    label = "Select Teams",
+    choices = list("All Teams" = "All Teams",
+                   "AHQ e-Sports Club" = "AHQ e-Sports Club",
+                   "Cloud9" = "Cloud9",
+                   "Clutch Gaming" = "Clutch Gaming",
+                   "Damwon Gaming" = "Damwon Gaming",
+                   "DetonatioN FocusMe" = "DetonatioN FocusMe",
+                   "Flamengo" = "Flamengo",
+                   "Fnatic" = "Fnatic",
+                   "Funplus Phoenix" = "Funplus Phoenix",
+                   "G2 Esports" = "G2 Esports",
+                   "GAM Esports" = "GAM Esports",
+                   "Griffin" = "Griffin",
+                   "Hong Kong Attitude" = "Hong Kong Attitude",
+                   "Invictus Gaming" = "Invictus Gaming",
+                   "Isurus Gaming" = "Isurus Gaming",
+                   "J Team" = "J Team",
+                   "Lowkey Esports" = "Lowkey Esports",
+                   "Mammoth" = "Mammoth",
+                   "MEGA Esports" = "MEGA Esports",
+                   "Royal Never Give Up" = "Royal Never Give Up",
+                   "Royal Youth" = "Royal Youth",
+                   "SK Telecom T1" = "SK Telecom T1",
+                   "Splyce" = "Splyce",
+                   "Team Liquid" = "Team Liquid",
+                   "Unicorns of Love" = "Unicorns of Love"),
+    selected = "All Teams"
+  )
+)
+
+# Page four tab of panel.
 page_four <- tabPanel(
-  "Page Title (Vis 3)",
+  "Banned Champions",
+  h2("Statistics of Banned Champions in Professional games."),
+  p("The graph shows the statistics of banned champions per phase for every team that played in the LCS 2019 Summer Season. With this graph, it can show what champions were the most popular to ban for competitive play, as esports data would contribute heavily in understanding the popularity of banning certain champions who could be strongly favored to play.."),
+  sidebarLayout(
+    select_team,
+    bar_graph_bans
+  )
+)
+
+# Michael's End
+
+page_one <- tabPanel(
+  "Page One (Overview)",
   h2("Put a caption here"),
   sidebarLayout(
     sidebarPanel(),

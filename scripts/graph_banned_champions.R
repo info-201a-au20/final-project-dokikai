@@ -10,7 +10,7 @@ library("lintr")
 
 # Obtain matches
 promatch_df <-
-  read.csv("../data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
+  read.csv("./data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
          stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
 
 # Filter all bans from promatch_df and obtain top ten
@@ -23,7 +23,7 @@ top_ten_bans <- function(df) {
     gather(ban_phase, banned_champs, ban1, ban2, ban3, ban4, ban5) %>%
     count(banned_champs) %>%
     arrange(-n) %>%
-    top_n(10, n)
+    slice(1:10)
   banned_champ_bar <- ggplot(data = bans_df) +
     geom_col(aes(x = reorder(banned_champs, -n), y = n, fill = banned_champs)) +
     labs(title = "Top Ten Banned Champions During
