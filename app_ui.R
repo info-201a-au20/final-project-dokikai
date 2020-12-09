@@ -5,7 +5,7 @@ source("app_server.R")
 wpm_sidebar_content <- sidebarPanel(
   selectInput(
     inputId = "var_team",
-    label = "Selct Teams",
+    label = "Select Teams",
     choices = list("Win Teams" = "1", "Lose Teams" = "0", "Both" = "2"),
     selected = "Both"
   ),
@@ -13,15 +13,15 @@ wpm_sidebar_content <- sidebarPanel(
     inputId = "num_ward",
     label = "Choose a interval for the number of wards",
     max = `max_ward`,
-    min = `min_ward`,
-    value = `min_ward`
+    min = 0,
+    value = 0
   ),
   sliderInput(
     inputId = "num_death",
     label = "Choose a interval for the number of death",
     max = `max_death`,
-    min = `min_death`,
-    value = `min_death`,
+    min = 0,
+    value = 0,
     round = FALSE
   )
 )
@@ -47,13 +47,22 @@ page_three <- tabPanel(
 
 
 # Kai's start
+
+# Loads in the Champion Statistics dataframe for analysis
+champions_df <- read.csv("./data/LoL-Champions.csv", stringsAsFactors = FALSE)
+# Filters out unnecessary values
+stat_values <- select(champions_df, -Id, -Name, -Class, -DamageType,
+                      -Crowd.Control)
+
+# Sidebar content for generating the sidebar options for the Pie Chart
+# which includes color selection and objective type
 pie_sidebar_content <- sidebarPanel(
   selectInput(
     inputId = "graph_color",
     label = "Select Graph Color",
-    choices = list("Red" = "Reds", "Blue" = "Blues",
-                   "Green" = "Greens", "Purple" = "Purples"),
-    selected = "Reds"
+    choices = list("Purple" = "Purples", "Red" = "Reds", "Blue" = "Blues",
+                   "Green" = "Greens"),
+    selected = "Purples"
   ),
   radioButtons(
     inputId = "objectiveType",
@@ -61,19 +70,53 @@ pie_sidebar_content <- sidebarPanel(
     choices = list("First Blood" = "won_fb", "First Tower" = "won_ft",
                    "First Dragon" = "won_fd", "First Inhibitor" = "won_fi"),
     selected = "won_fb"
-  ) 
+  )
 )
 
-pie_main_content <- mainPanel(
-  plotOutput(outputId = "first_pie")
+
+# Generates the sidebar information for the Champion Class statistics
+stats_sidebar <- sidebarPanel(
+  checkboxGroupInput(
+    inputId = "checkbox",
+    label = h3("Champion Classes to Display"),
+    choices = unique(champions_df$Class),
+    selected = unique(champions_df$Class)
+  ),
+  radioButtons(
+    inputId = "stats",
+    label = h3("Choose Stat to Visualize"),
+    choices = colnames(stat_values),
+    selected = "Style"
+  )
 )
 
-pie_main_content <- mainPanel(
-  plotOutput(outputId = "first_pie")
-)
-
+# Produces the second tab of the website which stores the information regarding
+# champion class and objective's effects on winrate.
 page_two <- tabPanel(
-  "Winning First Objective and Winrate",
+  "Champion Class, Skills, and Objectives",
+  h2("Champion Class and Corresponding Statistics"),
+  sidebarLayout(
+    stats_sidebar,
+    mainPanel(plotlyOutput("class"), p("\n"),
+    p("In League of Legends, each playable character falls within a larger
+      category of \"Champion Class\" where each class has a different set of
+      skills. Some classes, such as Assasins, are better at obtaining early
+      objectives such as First Blood while other classes are better at getting
+      other important objectives in the game such as Dragons, Towers, or
+      Inhibitors. As a result, seeing the various breakdowns of each Class and
+      their ability to do damage, maneauver the map, or even their difficulty
+      level can help gain insights into a broader picture of how League
+      distributes and balances various playstyles and maintains game balance."),
+    p("In the boxplot above, various information regarding Champion class has
+      been aggregated and distributed accordingly in order to see the general
+      ranges of Champion statistics. This broader scope and perpective of the
+      Class breakdowns can be helpful for League of Legends players at every
+      level of play. Whether you be a seasoned veteran trying to visualize the
+      general class types in making team compositions or a complete novice
+      assessing which role is generally the easiest skill wise, this visual
+      provides insights into what direction any player might want to go!")
+    )
+  ),
   h2("How First Objectives Affect Winrate"),
   p("When approaching this dataset, one question that was pertinent to League
     of Legends is how much of an impact game objective control had in your win
@@ -85,7 +128,7 @@ page_two <- tabPanel(
     shows the visual demarkers spatially with area."),
   sidebarLayout(
     pie_sidebar_content,
-    pie_main_content
+    mainPanel(plotOutput(outputId = "first_pie"))
   )
 )
 # Kai's end
@@ -138,24 +181,36 @@ select_team <- sidebarPanel(
 page_four <- tabPanel(
   "Banned Champions",
   h2("Statistics of Banned Champions in Professional games."),
-  p("The graph shows the statistics of banned champions per phase for every team
-    that played in the LCS 2019 Summer Season. With this graph, it can show what
-    champions were the most popular to ban for competitive play, as esports data
-    would contribute heavily in understanding the popularity of banning certain 
-    champions who could be strongly favored to play."),
+  p("The graph shows the statistics of banned champions per phase for every
+    team that played in the LCS 2019 Summer Season. With this graph, it can show
+    what champions were the most popular to ban for competitive play, as esports
+    data would contribute heavily in understanding the popularity of banning
+    certain champions who could be strongly favored to play.."),
   sidebarLayout(
     select_team,
     bar_graph_bans
   )
 )
-
 # Michael's End
 
+# Generates the overview for the project
 page_one <- tabPanel(
-  "Page One (Overview)",
-  h2("Put a caption here"),
+  "Project Overview",
+  h2("League of Legends - a Data Driven Project "),
   sidebarLayout(
-    sidebarPanel(),
+    sidebarPanel(
+      p("With Multiplayer Online Battle Arena (MOBA) games beinig some of the
+        most popular video games in the world, its no doubt that League of
+        Legends has had an immense cultural impact as the biggest MOBA in the
+        world! But much like many other video games, League of Legends has many
+        variables and factors that can contribute to a teams chance of winning.
+        In this project, we wanted to answer three primary questions: (1) to
+        what extent winning certain objectives correlated with winninig the
+        match, (2) how professional League of Legends E-sports atheletes utilize
+        warding and vision mechanics and the gameplay effects that has, and (3)
+        the variability in banning certain champions in professional play along
+        with general champion statistics.")
+    ),
     mainPanel()
   )
 )

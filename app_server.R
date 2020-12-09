@@ -8,11 +8,9 @@ library("scales")
 df_wards <- read.csv(
   "./data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
   stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
-# Wenyi: Define variable that will be used in ui file
+# Wenyi: Define variable that wll be used in ui file
 max_death <- max(df_wards$teamdeaths)
-min_death <- min(df_wards$teamdeaths)
 max_ward <- max(df_wards$wards)
-min_ward <-min(df_wards$wards)
 
 
 # Kai part
