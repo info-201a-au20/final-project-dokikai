@@ -69,7 +69,6 @@ blank_theme <- theme_minimal() +
 
 
 server <- function(input, output, session) {
-
     output$message <- renderText({
       if (input$var_team == 1) {
         msg <- paste0("You've chosen Win Team with wards interval [0,",
@@ -172,4 +171,35 @@ server <- function(input, output, session) {
         guides(fill = FALSE) + coord_flip()
       return(ggplotly(box_plot))
     })
+    output$wards_win_lose <-renderPlotly({
+      data <- df_wards%>%
+        group_by(gameid) %>%
+        filter(position == "Team") # select data that is useful to our analyze
+      # put the wards as x-axis, and number of death as y-axis, them put team name
+      # on the chats. Finally, we separate the win teams and fail team to make a
+      # clear comparison
+      map <- ggplot(data, mapping = aes(
+        x = wards, y = teamdeaths, color = team,
+        text = paste("result: ", result)
+      )) +
+        ggtitle("Scatter Plot in Terms of Wards Versus Death Between Win Teams and Lose Teams") +
+        geom_point() +
+        facet_wrap(~result,labeller = labeller(result = 
+                                                 c("0" = "Lose Teams",
+                                                   "1" = "Win Teams")))
+       return(ggplotly(map))
+    })
+    output$top10_banned_champ <- renderTable({
+      bans_top10_champ <-df_wards %>%
+        group_by(gameid) %>%
+        filter(position == "Team")%>%
+        ungroup()%>%
+        select(ban1:ban5) %>%
+        gather(ban_phase, banned_champs, ban1, ban2, ban3, ban4, ban5) %>%
+        count(banned_champs)%>%
+        arrange(-n)%>%
+        head(10)
+    })
+       
+    
   }
