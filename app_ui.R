@@ -28,6 +28,14 @@ wpm_sidebar_content <- sidebarPanel(
 
 wpm_main_content <- mainPanel(
   h3("Scatter Plot in Terms of Wards and Death"),
+  p("Ward is a deployable unit that removes the fog of war in a certain 
+    area of the map. Then, each member of the team can clearly see where their 
+    teammates are and can help better place battle strategy. Generally, 
+    the more wards a team has, the less probablity of them be killed,and 
+    the higher probability of them winning. In the scatter plot, 
+    you can choose the win team, lose team, and both teams in
+    professionalLeague of Legends play and analyzed their relationship between 
+    the wards that each team place in battleground and their number of deaths. "),
   textOutput(
     "message"
   ),
@@ -281,8 +289,24 @@ page_five <- tabPanel(
     map control tends to align with the winning team. In all, both in terms of
     warding and objective control, managing map presence appears the be a
     fundamental key to winning in League of Legends."),
+  plotlyOutput(
+    "wards_win_lose"
+  ),
+  p("we split the winning and losing teams in professional League of Legends play
+    and analyzed their relationship between the wards that each team place in 
+    battleground and their number of deaths. "),
+  p("From the right-hand table, it shows that the number of wards in most win teams 
+    is concentrated on interval [100, 150]. Whereas, on the left-hand table, 
+    the number of wards in most losing teams is mainly between [0, 150]. 
+    The different intervals showed that the more wards the teams have, 
+    the more possibility they will win the game."),
   h2("Champion Banning"),
-  p("heyyyyy")
+  p(" In the professional competition of Leagues of Legends, the abilities 
+  of some champions can badly disrupt the flow of the game. In the table below, 
+  we have summarised the 10 most banned champions"),
+  tableOutput(
+    "top10_banned_champ"
+  )
 )
 
 ui <- navbarPage(
