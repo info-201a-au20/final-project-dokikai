@@ -189,8 +189,7 @@ server <- function(input, output, session) {
       # on the chats. Finally, we separate the win teams and fail team to make a
       # clear comparison
       map <- ggplot(data, mapping = aes(
-        x = wards, y = teamdeaths, color = team,
-        text = paste("result: ", result)
+        x = wards, y = teamdeaths, color = team
       )) +
         ggtitle("Scatter Plot in Terms of Wards Versus Death Between Win Teams and Lose Teams") +
         geom_point() +
@@ -208,7 +207,9 @@ server <- function(input, output, session) {
         gather(ban_phase, banned_champs, ban1, ban2, ban3, ban4, ban5) %>%
         count(banned_champs)%>%
         arrange(-n)%>%
-        head(10)
+        head(10)%>%
+        rename("Number of Bans" = n,
+               "Champion" = banned_champs)
     })
        
     
