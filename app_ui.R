@@ -35,14 +35,15 @@ wpm_sidebar_content <- sidebarPanel(
 
 # Creates the main panel for the sidebar layout
 wpm_main_content <- mainPanel(
-  p("Ward is a deployable unit that removes the fog of war in a certain 
-    area of the map. Then, each member of the team can clearly see where their 
-    teammates are and can help better place battle strategy. Generally, 
-    the more wards a team has, the less probablity of them be killed,and 
-    the higher probability of them winning. In the scatter plot, 
+  p("Ward is a deployable unit that removes the fog of war in a certain
+    area of the map. Then, each member of the team can clearly see where their
+    teammates are and can help better place battle strategy. Generally,
+    the more wards a team has, the less probablity of them be killed,and
+    the higher probability of them winning. In the scatter plot,
     you can choose the win team, lose team, and both teams in
-    professionalLeague of Legends play and analyzed their relationship between 
-    the wards that each team place in battleground and their number of deaths. "),
+    professionalLeague of Legends play and analyzed their relationship between
+    the wards that each team place in battleground and their number of
+    deaths."),
   textOutput(
     "message"
   ),
@@ -135,29 +136,59 @@ overview_image <- mainPanel(
   </div>')
 )
 
+main_overview <- p(
+  HTML("<p>
+    With Multiplayer Online Battle Arena (MOBA) games beginning some of
+    the most popular video games in the world, its no doubt that
+    <a href=https://na.leagueoflegends.com/en-us/>League of Legends</a>
+    has had an immense cultural impact as the biggest MOBA in
+    the world! But much like many other video games, League of Legends has
+    many variables and factors that can contribute to a teams chance of
+    winning.
+    </p>")
+)
+
+overview_sources <- p(
+  HTML("<p>
+    We used data from various sources that contributed in answering
+    several questions we had about League of Legends and it's data.
+    We used League of Legends professional match statistics during the LCS
+    2019 Summer Season
+    <a href=https://www.kaggle.com/xmorra/
+    league-of-legends-world-championship-2019>
+    found here,
+    </a>
+    as well as data of western Europe's League of Legend's statistics for the
+    average player
+    <a href=https://www.kaggle.com/datasnaek/league-of-legends> found here,</a>
+    and champion data from Riot's API for League of Legends
+    <a href=https://www.kaggle.com/uskeche/leauge-of-legends-champions-dataset>
+    found here.</a>
+    </p>")
+)
+
 # Generates the overview for the project
 overview_page <- tabPanel(
   "Project Overview",
   h2("League of Legends - a Data Driven Project"),
+  main_overview,
+  overview_sources,
   sidebarLayout(
     sidebarPanel(
-      HTML("<p>With Multiplayer Online Battle Arena (MOBA) games beinig some of the
-        most popular video games in the world, its no doubt that 
-        <a href=https://na.leagueoflegends.com/en-us/>League of
-        Legends</a> has had an immense cultural impact as the biggest MOBA in the
-        world! But much like many other video games, League of Legends has many
-        variables and factors that can contribute to a teams chance of winning.</p>"),
-      p("In this project, we wanted to answer three primary questions:"), 
-      HTML("<ul><li>
-           To what extent would winning certain objectives 
-            correlate with winning the match?
-           </li>
-           <li>How do professional League of Legends E-sports atheletes utilize 
-           warding and vision mechanics and how do they effect gameplay?
-            </li>
-           <li>Does the variability in banning certain champions in 
-           professional play along with general champion statistics?
-            </li></ul>")
+      p("In this project, we wanted to answer three primary questions:"),
+      HTML("<ul>
+        <li>
+          To what extent would winning certain objectives
+          correlate with winning the match?
+        </li>
+        <li>
+          How do professional League of Legends E-sports atheletes utilize
+          warding and vision mechanics and how do they effect gameplay?
+        </li>
+        <li>
+          Does the variability in banning certain champions in
+          professional play along with general champion statistics?
+        </li></ul>")
     ),
     overview_image
   )
@@ -171,7 +202,7 @@ stats_and_pie_page <- tabPanel(
   sidebarLayout(
     stats_sidebar,
     mainPanel(plotlyOutput("class"), p("\n"),
-              p("In League of Legends, each playable character falls within a larger
+      p("In League of Legends, each playable character falls within a larger
       category of \"Champion Class\" where each class has a different set of
       skills. Some classes, such as Assasins, are better at obtaining early
       objectives such as First Blood while other classes are better at getting
@@ -180,7 +211,7 @@ stats_and_pie_page <- tabPanel(
       their ability to do damage, maneauver the map, or even their difficulty
       level can help gain insights into a broader picture of how League
       distributes and balances various playstyles and maintains game balance."),
-              p("In the boxplot above, various information regarding Champion class has
+      p("In the boxplot above, various information regarding Champion class has
       been aggregated and distributed accordingly in order to see the general
       ranges of Champion statistics. This broader scope and perpective of the
       Class breakdowns can be helpful for League of Legends players at every
@@ -293,17 +324,39 @@ summary_page <- tabPanel(
   p("Here, we split the winning and losing teams in professional League of
     Legends play and analyzed their relationship between the wards that each
     team place inbattleground and their number of deaths. "),
-  p("From the right-hand table, it shows that the number of wards in most win teams 
-    is concentrated on interval [100, 150]. Whereas, on the left-hand table, 
-    the number of wards in most losing teams is mainly between [0, 150]. 
-    The different intervals showed that the more wards the teams have, 
+  p("From the right-hand table, it shows that the number of wards in most win
+    teams is concentrated on interval [100, 150]. Whereas, on the left-hand
+    table, the number of wards in most losing teams is mainly between [0, 150].
+    The different intervals showed that the more wards the teams have,
     the more possibility they will win the game."),
   h2("Champion Banning"),
-  p(" In the professional competition of Leagues of Legends, the abilities 
-  of some champions can badly disrupt the flow of the game. In the table below, 
-  we have summarised the 10 most banned champions"),
+  p("While casual gameplay with League of Legends definitely lends itself to
+    many different variables, professional play is a completely different game.
+    Within pro play, there is a ban phase that allows each team to ban champions
+    from being played in that match they don't want to deal with. whether it be
+    because they have a team composition that struggles with that champion or
+    that the other team has a player that specializes with them, this feature
+    drastically changes the tides of the game as certain champions tend to be
+    banned more on average due to their unique abilities. Below are displayed
+    the most banned champions in professional play (from this dataset)."),
   tableOutput(
     "top10_banned_champ"
+  ),
+  p("It appears that by counting the pure number of bans, Pantheon is the most
+    banned champion in professional play with a staggering 118 bans, with Qiyana
+    and Syndra following that 86 and 66 bans respectively. The list continues to
+    show the number of bans per champion and we can gain a lot of insight about
+    both professional play and specific champions. In particular, it tells us
+    that some champions in professional play offer some type of advantage that
+    pro's feel to be too threatening - whether that be Pantheons global map
+    presence and early game capabilities or Qiyana's team fight zoning and crowd
+    control spells. As a result, we can deduce that these champion ban rates are
+    not a coincidence but the direct result of a champions utility at that time
+    and how well they fit into the meta-game scene. With that, it can also flag
+    to casual players and e-sports watchers that within their games some of
+    these champions that might be under looked in normal play (such as Qiyana)
+    have a large amount of potential to be massive threats if used in the right
+    hands!"
   )
 )
 
@@ -311,7 +364,7 @@ summary_page <- tabPanel(
 ui <- fluidPage(
   includeCSS("style.css"),
   navbarPage(
-    "INFO 201",
+    "INFO 201 AE 3 - Kai Daniels, Michael Gov, Wenyi Sun, Rajeev Krishna",
     overview_page,
     stats_and_pie_page,
     wards_page,

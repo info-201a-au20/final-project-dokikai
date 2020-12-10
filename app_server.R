@@ -106,7 +106,7 @@ server <- function(input, output, session) {
       map <- ggplot(useful_data, mapping = aes(
         x = wards, y = teamdeaths, color = team,
       )) +
-        ggtitle("Scatter Plot of Wards and Death")+
+        ggtitle("Scatter Plot of Wards and Death") +
         geom_point(stat = "identity")
 
       map <- ggplotly(map)
@@ -134,7 +134,7 @@ server <- function(input, output, session) {
     output$bar_graph_banned <- renderPlotly({
       banned_df <- df_wards
       if (input$team_name != "All Teams") {
-        banned_df <- filter(banned_df, team == input$team_name)
+        banned_df <- filter(banned_df, !!as.name("team") == input$team_name)
       }
       bans_df <- banned_df %>%
         select(position, player, team, champion, contains("ban")) %>%
@@ -173,10 +173,10 @@ server <- function(input, output, session) {
         guides(fill = FALSE) + coord_flip()
       return(ggplotly(box_plot))
     })
-    
+
     # Creates champion stats table for the summary information
-    output$summary_table <-renderTable({
-      plot <- champions_df%>%
+    output$summary_table <- renderTable({
+      plot <- champions_df %>%
         group_by(Class) %>%
         summarize("Avg Damage" = mean(unlist(Damage)),
                   "Avg Tankiness" = mean(unlist(Sturdiness)),
@@ -184,36 +184,34 @@ server <- function(input, output, session) {
                   "Avg Difficulty" = mean(unlist(Difficulty)))
       return(plot)
     })
-    
+
     # Creates the scatterplots for the summary information
-    output$wards_win_lose <-renderPlotly({
-      data <- df_wards%>%
+    output$wards_win_lose <- renderPlotly({
+      data <- df_wards %>%
         group_by(gameid) %>%
-        filter(position == "Team") # select data that is useful to our analyze
-      # put the wards as x-axis, and number of death as y-axis, them put team name
-      # on the chats. Finally, we separate the win teams and fail team to make a
-      # clear comparison
+        filter(position == "Team")
       map <- ggplot(data, mapping = aes(
         x = wards, y = teamdeaths, color = team
       )) +
-        ggtitle("Scatter Plot in Terms of Wards Versus Death Between Win Teams and Lose Teams") +
+        ggtitle("Scatter Plot in Terms of Wards Versus Death Between
+                Win Teams and Lose Teams") +
         geom_point() +
-        facet_wrap(~result,labeller = labeller(result = 
+        facet_wrap(~result, labeller = labeller(result =
                                                  c("0" = "Lose Teams",
                                                    "1" = "Win Teams")))
        return(ggplotly(map))
     })
-    
+
     # Creates a table for the top ten champion bans for the summary information
     output$top10_banned_champ <- renderTable({
-      bans_top10_champ <-df_wards %>%
+      bans_top10_champ <- df_wards %>%
         group_by(gameid) %>%
-        filter(position == "Team")%>%
-        ungroup()%>%
+        filter(position == "Team") %>%
+        ungroup() %>%
         select(ban1:ban5) %>%
         gather(ban_phase, banned_champs, ban1, ban2, ban3, ban4, ban5) %>%
-        count(banned_champs)%>%
-        arrange(-n)%>%
+        count(banned_champs) %>%
+        arrange(-n) %>%
         head(10) %>%
         rename("Number of Bans" = n,
                "Champion" = banned_champs)
