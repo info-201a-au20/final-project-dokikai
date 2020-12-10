@@ -1,8 +1,10 @@
-div #img {
-  outline-width: 3;
-  outline-color: red;
+#img {
+  outline-color: black;
+  outline-style: solid;
+  outline-width: medium;
 }
 
 h2 {
   color: blue;
+  font-weight: bold;
 }

@@ -202,8 +202,8 @@ page_four <- tabPanel(
 # Michael's End
 
 overview_image <- mainPanel(
-  HTML('<div id = "img">
-  <img src = "league.jpg", height = 493, width = 380>
+  HTML('<div>
+  <img id = "img", src = "league.jpg">
   </div>')
 )
 
