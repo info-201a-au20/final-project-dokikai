@@ -108,6 +108,7 @@ server <- function(input, output, session) {
       map <- ggplot(useful_data, mapping = aes(
         x = wards, y = teamdeaths, color = team,
       )) +
+        ggtitle("Scatter Plot of Wards and Death")+
         geom_point(stat = "identity")
 
       map <- ggplotly(map)
