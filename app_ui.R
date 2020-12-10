@@ -213,11 +213,12 @@ page_one <- tabPanel(
   h2("League of Legends - a Data Driven Project"),
   sidebarLayout(
     sidebarPanel(
-      p("With Multiplayer Online Battle Arena (MOBA) games beinig some of the
-        most popular video games in the world, its no doubt that League of
-        Legends has had an immense cultural impact as the biggest MOBA in the
+      HTML("<p>With Multiplayer Online Battle Arena (MOBA) games beinig some of the
+        most popular video games in the world, its no doubt that 
+        <a href=https://na.leagueoflegends.com/en-us/>League of
+        Legends</a> has had an immense cultural impact as the biggest MOBA in the
         world! But much like many other video games, League of Legends has many
-        variables and factors that can contribute to a teams chance of winning."),
+        variables and factors that can contribute to a teams chance of winning.</p>"),
       p("In this project, we wanted to answer three primary questions:"), 
       HTML("<ul><li>
            To what extent would winning certain objectives 
