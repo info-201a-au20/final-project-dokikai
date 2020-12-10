@@ -27,7 +27,7 @@ wpm_sidebar_content <- sidebarPanel(
 )
 
 wpm_main_content <- mainPanel(
-  h3("Scatter Plot in Terms of Wards and Death"),
+  h3("The Relationship between Wards and Death"),
   p("Ward is a deployable unit that removes the fog of war in a certain 
     area of the map. Then, each member of the team can clearly see where their 
     teammates are and can help better place battle strategy. Generally, 
