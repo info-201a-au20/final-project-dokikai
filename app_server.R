@@ -11,7 +11,7 @@ df_wards <- read.csv(
 # Wenyi: Define variable that wll be used in ui file
 max_death <- max(df_wards$teamdeaths)
 max_ward <- max(df_wards$wards)
-
+champions_df <- read.csv("data/LoL-Champions.csv", stringsAsFactors = FALSE)
 
 # Kai part
 # Filter down rows only to be games won (using won category)
@@ -171,6 +171,16 @@ server <- function(input, output, session) {
         guides(fill = FALSE) + coord_flip()
       return(ggplotly(box_plot))
     })
+    output$summary_table <-renderTable({
+      plot <- champions_df%>%
+        group_by(Class) %>%
+        summarize("Avg Damage" = mean(unlist(Damage)),
+                  "Avg Tankiness" = mean(unlist(Sturdiness)),
+                  "Avg Mobility" = mean(unlist(Mobility)),
+                  "Avg Difficulty" = mean(unlist(Difficulty)))
+      return(plot)
+    })
+   
     output$wards_win_lose <-renderPlotly({
       data <- df_wards%>%
         group_by(gameid) %>%
@@ -179,8 +189,7 @@ server <- function(input, output, session) {
       # on the chats. Finally, we separate the win teams and fail team to make a
       # clear comparison
       map <- ggplot(data, mapping = aes(
-        x = wards, y = teamdeaths, color = team,
-        text = paste("result: ", result)
+        x = wards, y = teamdeaths, color = team
       )) +
         ggtitle("Scatter Plot in Terms of Wards Versus Death Between Win Teams and Lose Teams") +
         geom_point() +
@@ -199,8 +208,8 @@ server <- function(input, output, session) {
         count(banned_champs)%>%
         arrange(-n)%>%
         head(10) %>%
-        rename("Number of Bans" = n) %>%
-        rename("Champion" = banned_champs)
+        rename("Number of Bans" = n,
+               "Champion" = banned_champs)
     })
        
     

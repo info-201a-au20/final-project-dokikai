@@ -244,7 +244,9 @@ page_five <- tabPanel(
     This is shown specifically from the box plot visualization in the Champion
     Class, Skills, and Objectives tab of the interface which has been
     consolidated into the figure below."),
-  p("[Insert Figure]"),
+  tableOutput(
+    "summary_table"
+  ),
   p("From this table, some general observations we can make are that, on
     average, the Tank class is the easiest to play while Mage-Assasins, on
     average, are the most difficult. Furthermore, certain classes in general
