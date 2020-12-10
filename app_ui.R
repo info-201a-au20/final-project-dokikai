@@ -193,7 +193,7 @@ page_four <- tabPanel(
     team that played in the LCS 2019 Summer Season. With this graph, it can show
     what champions were the most popular to ban for competitive play, as esports
     data would contribute heavily in understanding the popularity of banning
-    certain champions who could be strongly favored to play.."),
+    certain champions who could be strongly favored to play."),
   sidebarLayout(
     select_team,
     bar_graph_bans
