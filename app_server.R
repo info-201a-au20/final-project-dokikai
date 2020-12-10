@@ -193,8 +193,7 @@ server <- function(input, output, session) {
       map <- ggplot(data, mapping = aes(
         x = wards, y = teamdeaths, color = team
       )) +
-        ggtitle("Scatter Plot in Terms of Wards Versus Death Between
-                Win Teams and Lose Teams") +
+        ggtitle("Wards vs Deaths for Wins vs Losses") +
         geom_point() +
         facet_wrap(~result, labeller = labeller(result =
                                                  c("0" = "Lose Teams",
