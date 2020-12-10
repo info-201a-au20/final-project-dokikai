@@ -1,7 +1,14 @@
+# Load in ggplot2 and source app_server
 library("ggplot2")
 source("app_server.R")
 
-# Wenyi's start:
+# Loads in the Champion Statistics data frame for analysis
+champions_df <- read.csv("./data/LoL-Champions.csv", stringsAsFactors = FALSE)
+# Filters out unnecessary values
+stat_values <- select(champions_df, -Id, -Name, -Class, -DamageType,
+                      -Crowd.Control)
+
+# Creates the sidebar for the wards section
 wpm_sidebar_content <- sidebarPanel(
   selectInput(
     inputId = "var_team",
@@ -26,8 +33,8 @@ wpm_sidebar_content <- sidebarPanel(
   )
 )
 
+# Creates the main panel for the sidebar layout
 wpm_main_content <- mainPanel(
-  h3("The Relationship between Wards and Death"),
   p("Ward is a deployable unit that removes the fog of war in a certain 
     area of the map. Then, each member of the team can clearly see where their 
     teammates are and can help better place battle strategy. Generally, 
@@ -43,24 +50,6 @@ wpm_main_content <- mainPanel(
     "wpm_death_plot"
   )
 )
-
-page_three <- tabPanel(
-  "Wards VS Death",
-  sidebarLayout(
-    wpm_sidebar_content,
-    wpm_main_content
-  )
-)
-# Wenyi's end
-
-
-# Kai's start
-
-# Loads in the Champion Statistics dataframe for analysis
-champions_df <- read.csv("./data/LoL-Champions.csv", stringsAsFactors = FALSE)
-# Filters out unnecessary values
-stat_values <- select(champions_df, -Id, -Name, -Class, -DamageType,
-                      -Crowd.Control)
 
 # Sidebar content for generating the sidebar options for the Pie Chart
 # which includes color selection and objective type
@@ -81,7 +70,6 @@ pie_sidebar_content <- sidebarPanel(
   )
 )
 
-
 # Generates the sidebar information for the Champion Class statistics
 stats_sidebar <- sidebarPanel(
   checkboxGroupInput(
@@ -97,51 +85,6 @@ stats_sidebar <- sidebarPanel(
     selected = "Style"
   )
 )
-
-# Produces the second tab of the website which stores the information regarding
-# champion class and objective's effects on winrate.
-page_two <- tabPanel(
-  "Champion Class, Skills, and Objectives",
-  h2("Champion Class and Corresponding Statistics"),
-  sidebarLayout(
-    stats_sidebar,
-    mainPanel(plotlyOutput("class"), p("\n"),
-    p("In League of Legends, each playable character falls within a larger
-      category of \"Champion Class\" where each class has a different set of
-      skills. Some classes, such as Assasins, are better at obtaining early
-      objectives such as First Blood while other classes are better at getting
-      other important objectives in the game such as Dragons, Towers, or
-      Inhibitors. As a result, seeing the various breakdowns of each Class and
-      their ability to do damage, maneauver the map, or even their difficulty
-      level can help gain insights into a broader picture of how League
-      distributes and balances various playstyles and maintains game balance."),
-    p("In the boxplot above, various information regarding Champion class has
-      been aggregated and distributed accordingly in order to see the general
-      ranges of Champion statistics. This broader scope and perpective of the
-      Class breakdowns can be helpful for League of Legends players at every
-      level of play. Whether you be a seasoned veteran trying to visualize the
-      general class types in making team compositions or a complete novice
-      assessing which role is generally the easiest skill wise, this visual
-      provides insights into what direction any player might want to go!")
-    )
-  ),
-  h2("How First Objectives Affect Winrate"),
-  p("When approaching this dataset, one question that was pertinent to League
-    of Legends is how much of an impact game objective control had in your win
-    percentages. In particular, getting early objectives relative to the other
-    team can get you a lead in the game, but quantifying that lead is something
-    we set out to do! As a result, these charts show the correlative win
-    percentages based on if the winning team won the given objective. We also
-    choice a Pie Chart to represent this data because of how it intuitively
-    shows the visual demarkers spatially with area."),
-  sidebarLayout(
-    pie_sidebar_content,
-    mainPanel(plotOutput(outputId = "first_pie"))
-  )
-)
-# Kai's end
-
-# Start of Michael's part
 
 # Calls plotly for main panel
 bar_graph_bans <- mainPanel(
@@ -185,22 +128,7 @@ select_team <- sidebarPanel(
   )
 )
 
-# Page four tab of panel.
-page_four <- tabPanel(
-  "Banned Champions",
-  h2("Statistics of Banned Champions in Professional games."),
-  p("The graph shows the statistics of banned champions per phase for every
-    team that played in the LCS 2019 Summer Season. With this graph, it can show
-    what champions were the most popular to ban for competitive play, as esports
-    data would contribute heavily in understanding the popularity of banning
-    certain champions who could be strongly favored to play."),
-  sidebarLayout(
-    select_team,
-    bar_graph_bans
-  )
-)
-# Michael's End
-
+# Generates the image to be displayed on the overview page
 overview_image <- mainPanel(
   HTML('<div>
   <img id = "img", src = "league.jpg">
@@ -208,7 +136,7 @@ overview_image <- mainPanel(
 )
 
 # Generates the overview for the project
-page_one <- tabPanel(
+overview_page <- tabPanel(
   "Project Overview",
   h2("League of Legends - a Data Driven Project"),
   sidebarLayout(
@@ -235,7 +163,75 @@ page_one <- tabPanel(
   )
 )
 
-page_five <- tabPanel(
+# Produces the second tab of the website which stores the information regarding
+# champion class and objective's effects on winrate.
+stats_and_pie_page <- tabPanel(
+  "Champion Class, Skills, and Objectives",
+  h2("Champion Class and Corresponding Statistics"),
+  sidebarLayout(
+    stats_sidebar,
+    mainPanel(plotlyOutput("class"), p("\n"),
+              p("In League of Legends, each playable character falls within a larger
+      category of \"Champion Class\" where each class has a different set of
+      skills. Some classes, such as Assasins, are better at obtaining early
+      objectives such as First Blood while other classes are better at getting
+      other important objectives in the game such as Dragons, Towers, or
+      Inhibitors. As a result, seeing the various breakdowns of each Class and
+      their ability to do damage, maneauver the map, or even their difficulty
+      level can help gain insights into a broader picture of how League
+      distributes and balances various playstyles and maintains game balance."),
+              p("In the boxplot above, various information regarding Champion class has
+      been aggregated and distributed accordingly in order to see the general
+      ranges of Champion statistics. This broader scope and perpective of the
+      Class breakdowns can be helpful for League of Legends players at every
+      level of play. Whether you be a seasoned veteran trying to visualize the
+      general class types in making team compositions or a complete novice
+      assessing which role is generally the easiest skill wise, this visual
+      provides insights into what direction any player might want to go!")
+    )
+  ),
+  h2("How First Objectives Affect Winrate"),
+  p("When approaching this dataset, one question that was pertinent to League
+    of Legends is how much of an impact game objective control had in your win
+    percentages. In particular, getting early objectives relative to the other
+    team can get you a lead in the game, but quantifying that lead is something
+    we set out to do! As a result, these charts show the correlative win
+    percentages based on if the winning team won the given objective. We also
+    choice a Pie Chart to represent this data because of how it intuitively
+    shows the visual demarkers spatially with area."),
+  sidebarLayout(
+    pie_sidebar_content,
+    mainPanel(plotOutput(outputId = "first_pie"))
+  )
+)
+
+# Page three which has information regarding warding
+wards_page <- tabPanel(
+  "Wards vs Death",
+  h2("The Relationship Between Wards and Death"),
+  sidebarLayout(
+    wpm_sidebar_content,
+    wpm_main_content
+  )
+)
+
+# Creates page for displaying champion ban rates in professional play
+bans_page <- tabPanel(
+  "Banned Champions",
+  h2("Statistics of Banned Champions in Professional games."),
+  p("The graph shows the statistics of banned champions per phase for every
+    team that played in the LCS 2019 Summer Season. With this graph, it can show
+    what champions were the most popular to ban for competitive play, as esports
+    data would contribute heavily in understanding the popularity of banning
+    certain champions who could be strongly favored to play."),
+  sidebarLayout(
+    select_team,
+    bar_graph_bans
+  )
+)
+
+# This page produces all summary information for our visualizations
+summary_page <- tabPanel(
   "Summary Takeaway",
   h2("Champion Statistics"),
   p("Notable data insight or pattern One notable data insight that we noticed
@@ -294,9 +290,9 @@ page_five <- tabPanel(
   plotlyOutput(
     "wards_win_lose"
   ),
-  p("we split the winning and losing teams in professional League of Legends play
-    and analyzed their relationship between the wards that each team place in 
-    battleground and their number of deaths. "),
+  p("Here, we split the winning and losing teams in professional League of
+    Legends play and analyzed their relationship between the wards that each
+    team place inbattleground and their number of deaths. "),
   p("From the right-hand table, it shows that the number of wards in most win teams 
     is concentrated on interval [100, 150]. Whereas, on the left-hand table, 
     the number of wards in most losing teams is mainly between [0, 150]. 
@@ -311,14 +307,15 @@ page_five <- tabPanel(
   )
 )
 
+# Generates the user interface
 ui <- fluidPage(
-    includeCSS("style.css"),
-    navbarPage(
+  includeCSS("style.css"),
+  navbarPage(
     "INFO 201",
-    page_one,
-    page_two,
-    page_three,
-    page_four,
-    page_five
+    overview_page,
+    stats_and_pie_page,
+    wards_page,
+    bans_page,
+    summary_page
   )
 )

@@ -4,16 +4,16 @@ library("dplyr")
 library("plotly")
 library("scales")
 
-# Import  wenyi's data
+# Import pro data
 df_wards <- read.csv(
   "./data/2019-summer-match-data-OraclesElixir-2019-11-10.csv",
   stringsAsFactors = FALSE, fileEncoding = "UTF-8-BOM")
-# Wenyi: Define variable that wll be used in ui file
+
+# defining wards max and min
 max_death <- max(df_wards$teamdeaths)
 max_ward <- max(df_wards$wards)
 champions_df <- read.csv("data/LoL-Champions.csv", stringsAsFactors = FALSE)
 
-# Kai part
 # Filter down rows only to be games won (using won category)
 games_df <- read.csv("./data/games.csv", stringsAsFactors = FALSE)
 
@@ -67,8 +67,9 @@ blank_theme <- theme_minimal() +
     plot.title = element_text(size = 16, face = "bold", hjust = .5)
   )
 
-
+# Creates and maintains information stored in the server
 server <- function(input, output, session) {
+    # Rendering the text for the win/loss part of the wards visualization
     output$message <- renderText({
       if (input$var_team == 1) {
         msg <- paste0("You've chosen Win Team with wards interval [0,",
@@ -86,14 +87,11 @@ server <- function(input, output, session) {
       return(msg)
     })
 
+    # Generates wards to death visualization
     output$wpm_death_plot <- renderPlotly({
       data <- df_wards %>%
         group_by(gameid) %>%
-        filter(position == "Team") # select data that is useful to our analyze
-      # put the wards as x-axis, and number of death as y-axis, put team name
-      # on the chats. Finally, we separate the win teams and fail team to make a
-      # clear comparison
-
+        filter(position == "Team")
       if (input$var_team == 1) {
         data <- filter(data, result == 0)
       }
@@ -115,6 +113,7 @@ server <- function(input, output, session) {
       return(map)
     })
 
+    # Generates pie chart for the objectives panel
     output$first_pie <- renderPlot({
       curr_df <- select(games_stats_pie, input$objectiveType)
       cur_col <- curr_df[[input$objectiveType]]
@@ -131,6 +130,7 @@ server <- function(input, output, session) {
       return(pie_plot)
     })
 
+    # Generates bar graph for ban champions based on pro teams
     output$bar_graph_banned <- renderPlotly({
       banned_df <- df_wards
       if (input$team_name != "All Teams") {
@@ -159,6 +159,7 @@ server <- function(input, output, session) {
       return(result)
     })
 
+    # Generates box plot for champion stats
     output$class <- renderPlotly({
       champions_df <- read.csv("./data/LoL-Champions.csv",
                                stringsAsFactors = FALSE)
@@ -172,6 +173,8 @@ server <- function(input, output, session) {
         guides(fill = FALSE) + coord_flip()
       return(ggplotly(box_plot))
     })
+    
+    # Creates champion stats table for the summary information
     output$summary_table <-renderTable({
       plot <- champions_df%>%
         group_by(Class) %>%
@@ -181,7 +184,8 @@ server <- function(input, output, session) {
                   "Avg Difficulty" = mean(unlist(Difficulty)))
       return(plot)
     })
-   
+    
+    # Creates the scatterplots for the summary information
     output$wards_win_lose <-renderPlotly({
       data <- df_wards%>%
         group_by(gameid) %>%
@@ -199,6 +203,8 @@ server <- function(input, output, session) {
                                                    "1" = "Win Teams")))
        return(ggplotly(map))
     })
+    
+    # Creates a table for the top ten champion bans for the summary information
     output$top10_banned_champ <- renderTable({
       bans_top10_champ <-df_wards %>%
         group_by(gameid) %>%
@@ -212,6 +218,4 @@ server <- function(input, output, session) {
         rename("Number of Bans" = n,
                "Champion" = banned_champs)
     })
-       
-    
   }
