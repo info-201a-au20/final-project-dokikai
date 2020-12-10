@@ -309,11 +309,14 @@ page_five <- tabPanel(
   )
 )
 
-ui <- navbarPage(
-  "INFO 201",
-  page_one,
-  page_two,
-  page_three,
-  page_four,
-  page_five
+ui <- fluidPage(
+    includeCSS("style.css"),
+    navbarPage(
+    "INFO 201",
+    page_one,
+    page_two,
+    page_three,
+    page_four,
+    page_five
+  )
 )

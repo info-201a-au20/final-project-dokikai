@@ -198,7 +198,9 @@ server <- function(input, output, session) {
         gather(ban_phase, banned_champs, ban1, ban2, ban3, ban4, ban5) %>%
         count(banned_champs)%>%
         arrange(-n)%>%
-        head(10)
+        head(10) %>%
+        rename("Number of Bans" = n) %>%
+        rename("Champion" = banned_champs)
     })
        
     
